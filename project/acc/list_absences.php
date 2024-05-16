@@ -26,46 +26,12 @@
     <div class="container w-full flex justify-center m-6 ">
         <main>
           <form method="post"   >
-             <button name="code" class="bg-orange-600 p-2 rounded-xl p-4 font-bold hover:scale-[1.2] hover:transition hover:duration[0.5s] hover:border-white hover:border-2" ><i class="fa-solid fa-hand-pointer mr-3 text-3xl  ">let code</i></button>
+             <!-- <button name="code" class="bg-orange-600 p-2 rounded-xl p-4 font-bold hover:scale-[1.2] hover:transition hover:duration[0.5s] hover:border-white hover:border-2" ><i class="fa-solid fa-hand-pointer mr-3 text-3xl  ">let code</i></button> -->
+             
           </form>
             <br>
         </main>
     </div>
     <br>
-    <?php
-    include("../config/config.php");
-        $code='';
-            function let_code(){
-                $chifre='0123456789';
-                $rand='';
-                for($i=0;$i<6;$i++){
-                    $rand.=$chifre[rand(0,strlen($chifre))]  ;
-                }
-                return $rand;
-            }
-            function inser_update(){ 
-                global $con;
-                $code=let_code();
-                $date_inser=time();
-                echo $date_inser;
-                $_SESSION['date_inser']=$date_inser;
-                $cooldown=60*5;
-                mysqli_query($con,"INSERT INTO CODE(CODE) VALUES('$code')");
-                echo ' <div class=" absolute right-[47.5%] top-[30%] rounded-lg border-2 border-orange-600 mt-3 bg-white p-3 font-bold">'.$code.' </div> ';
-                $db=time();
-                while($db-$date_inser<=$cooldown){
-                    $db=time();
-                }
-                $update=let_code();
-                mysqli_query($con,"UPDATE code SET code = '$update' WHERE code= '$code' ;");
-        }
-        if(isset($_POST['code'])){
-            session_start();
-            $btn_code=$_POST;
-            $_SESSION['code']=$btn_code;
-        inser_update(); 
-
-    }
-       ?>
 </body>
 </html>

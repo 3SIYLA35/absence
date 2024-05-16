@@ -35,54 +35,55 @@
             <?php
             include("../config/config.php");
             $code=mysqli_query($con,"SELECT CODE FROM CODE ORDER BY CODE DESC LIMIT 1;");
-            function verif(){
+            // function verif(){
               session_start();
               if(isset($_SESSION['code'])){
-                echo $_SESSION['date_inser'];
+                 $code_date=$_SESSION['date_inser'];
                  if(isset($_POST['present'])){
-                 $present=$_POST['code'];
-                 global $code;
-                  if(mysqli_num_rows($code)>0){
-                    $verif=mysqli_fetch_assoc($code);
-                    $donner=$verif['CODE'];
-                    if($donner==$present){?>
-                     <script>
-                       window.onload=function(){ 
-                       let div=document.getElementById('div');
-                       div.style.display='none';
-                       }
-                       </script><?php
-                       echo"<div class='p-2 text-2xl font-bold'> your present !</div> ";
-                      }  
-                    else{?>
-                      <script>
-                       window.onload=function(){ 
-                       let div=document.getElementById('div');
-                       div.style.display='none';
-                       }
-                       </script> <?php
-                       echo"<div class='p-2 text-2xl font-bold  '>incorrect!!</div>";
-                    }
+                    $now=time();
+                    if(mysqli_num_rows($code)>0 && $now-$code_date<=(5*60)){ 
+                        $present=$_POST['code'];
+                        global $code;
+                        $verif=mysqli_fetch_assoc($code);
+                        $donner=$verif['CODE'];
+                        if($donner==$present){?>
+                          <script>
+                           window.onload=function(){ 
+                           let div=document.getElementById('div');
+                           div.style.display='none';
+                           }
+                          </script><?php
+                          echo"<div class='p-2 text-2xl font-bold'> your present !</div> ";
+                          }  
+                        else{?>
+                          <script>
+                           window.onload=function(){ 
+                           let div=document.getElementById('div');
+                           div.style.display='none';
+                            }
+                          </script> <?php
+                          echo"<div class='p-2 text-2xl font-bold  '>incorrect!!</div>"; 
+                          }}
+                      else{
+                       ?>
+                       <script>
+                        window.onload=function(){ 
+                        let div=document.getElementById('div');
+                        div.style.display='none';
+                        }
+                        </script><?php
+                        $con;
+                        $full_name = $_SESSION['full_name'];
+                        $CNE = $_SESSION['CNE'];
+                        echo"<div class='p-2 text-2xl font-bold mt-[112px] flex justify-center items-center '>you are absent!!</div>";
+                        mysqli_query($con,"INSERT INTO absence (CNE,Full_name,date_abs) VALUES ('$CNE','$full_name',NOW());");
+                        }
+                    
                   }
-                  else{
-                    ?>
-                     <script>
-                       window.onload=function(){ 
-                       let div=document.getElementById('div');
-                       div.style.display='none';
-                       }
-                       </script><?php
-                    global $con;
-                    session_start();
-                    $full_name = $_SESSION['full_name'];
-                    $CNE = $_SESSION['CNE'];
-                    echo"<div class='p-2 text-2xl font-bold mt-[112px] flex justify-center items-center '>you are absent!!</div>";
-                    mysqli_query($con,"INSERT INTO absence (CNE,Full_name,date_abs) VALUES ('$CNE','$full_name',NOW());");
-                  }
-               }
-            }}
+         
+
+              }
             
-            verif();
             
             
             ?>
