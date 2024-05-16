@@ -7,6 +7,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="../output.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="sheettt" href="tablecss.css">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="p-0 m-0 bg-slate-300 font-serif">
@@ -26,12 +27,44 @@
     <div class="container w-full flex justify-center m-6 ">
         <main>
           <form method="post"   >
-             <!-- <button name="code" class="bg-orange-600 p-2 rounded-xl p-4 font-bold hover:scale-[1.2] hover:transition hover:duration[0.5s] hover:border-white hover:border-2" ><i class="fa-solid fa-hand-pointer mr-3 text-3xl  ">let code</i></button> -->
-             
+              <label for="ADate"> Enter the date  </label><br>
+              <input type="date" name="ADate">   
+               <button type="submit"> cherche </button>         
           </form>
             <br>
         </main>
     </div>
+  
+    <div id="tab">
+    <?php
+        include("../config/config.php");
+        if (isset($_POST['ADate']) && !empty($_POST['ADate'])) {
+            $date = $_POST['ADate'];
+        
+            $rl = mysqli_query($con, "SELECT * FROM absence WHERE date_abs='$date'");
+           
+        
+            $date_abs = mysqli_fetch_assoc($rl);
+        
+            if (mysqli_num_rows($rl)>0) {
+                echo "<table class='w-[1280px] m-3 ml-10 border-2 border-black bg-white'><thead class='w-[50%]'><tr><th>CNE</th><th>Nom et prénom</th></tr></thead><tbody class='p-2 bg-red-500 '>";
+                while ($row=mysqli_fetch_assoc($rl)) {
+                    echo "<tr class='p-2 bg-amber-700 m-4'>
+                            <td>" . $row["CNE"] . "</td>
+                            <td>" . $row["Full_name"] . "</td>
+                          </tr>";
+                }
+                echo "</tbody></table>";
+            } else {
+                echo "Personne n'était absent le $date";
+            }
+        }
+        
+        
+        ?>
     <br>
+
+
+    
 </body>
 </html>
