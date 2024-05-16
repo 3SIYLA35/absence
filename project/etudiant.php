@@ -14,7 +14,7 @@
       <div class="cards  p-6 m-6 w-[50%]   bg-slate-100 h-[80%] rounded-3xl shadow-2xl">
               <?php 
                 include("config/config.php");
-                if (!$con) { 
+                if(!$con) { 
                   die("Connection failed: " . mysqli_connect_error()); 
                 } 
                 if(isset($_POST['A_etudiant'])){
@@ -23,15 +23,13 @@
                    $get_name=mysqli_fetch_assoc(mysqli_query($con,"SELECT FULL_NAME from USER WHERE CNE='$CNE';"));
                    $full_name=$get_name['FULL_NAME'];
                    $result=mysqli_query($con, "SELECT * FROM USER WHERE CNE='$CNE'");
-                
-                
                    if(mysqli_num_rows($result) > 0) { 
                     session_start();
                     $_SESSION['full_name'] = $full_name;
                     $_SESSION['CNE'] = $CNE;
 
-                 echo "<div class='relative flex flex-col items-center h-full'>
-                       <div class='text-3xl text-black text-center p-1 m-2 font-bold'>
+                 echo "<div class=' w-full flex flex-col items-center justify-center h-full'>
+                       <div class='text-3xl mt-32 text-black text-center p-1 m-2 font-bold'>
                        <p> login is successful!</p>
                        </div> <br> 
                        <div class='absolute bottom-24 mt-4 mb-2 flex flex-col justify-between w-[80%] rounded-lg bg-orange-600'>
@@ -41,7 +39,7 @@
           
                 } else { 
               
-                  echo "<div class=' relative  flex flex-col items-center h-full'>
+                  echo "<div class='flex flex-col items-center h-full'>
                          <div class='text-3xl text-black text-center p-1 m-2 font-bold'>
                          <p> CNE is incorrect!</p>
                          </div> <br> 
@@ -61,34 +59,20 @@
           </div>
           <div class="etudiant m-2  flex flex-col">
             <form method="post" > 
-              <div class=" flex flex-col m-2">    
+                <div class=" flex flex-col m-2">    
                   <label for="etudiant" class="p-2 font-bold">CNE</label>
                   <input class="rounded-lg  p-4" type="text" id="etudiant" placeholder="your CNE!" required autocomplete="off" name="E_CNE">
-
                 </div>
-                  <div class=" flex flex-col m-2"  >
+                <div class=" flex flex-col m-2"  >
                   <label for="etudiant" class="p-2 font-bold">Date De Naissance</label>
                   <input type="date" class="rounded-lg p-4" id="etudiant"  required autocomplete="off" name="D_etudiant" >
-              </div>
+                </div>
               
-              <button type="submit" name="A_etudiant" class="m-2 mt-10 p-3 bg-orange-500 text-black rounded-lg font-bold" >Log In </button>
-               </form>
-
-
-
-              
-              
-              
-              
-
-
-
-
-
+              <button type="submit" name="A_etudiant" class="m-2 mt-10 p-3 bg-orange-500 text-black  w-full rounded-lg font-bold" >Log In </button>
+            </form>
           </div>
               <?php }  ?>
       </div>
-
     </div>
   </body>
   </html>

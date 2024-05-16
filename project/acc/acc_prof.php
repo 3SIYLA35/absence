@@ -39,7 +39,7 @@
                 $chifre='0123456789';
                 $rand='';
                 for($i=0;$i<6;$i++){
-                    $rand.=$chifre[rand(0,strlen($chifre))]  ;
+                    $rand.=$chifre[rand(0,strlen($chifre))] or die("") ;
                 }
                 return $rand;
             }
