@@ -17,31 +17,28 @@
                 if (!$con) { 
                   die("Connection failed: " . mysqli_connect_error()); 
                 } 
-                if(isset($_POST['A_etudiant'])){ 
-               $CNE=$_POST['E_CNE']; 
-                $Date_N=$_POST['D_etudiant']; 
-                $get_name=mysqli_fetch_assoc(mysqli_query($con,"SELECT FULL_NAME from USER WHERE CNE='$CNE';"));
-                $full_name=$get_name['FULL_NAME'];
-                $result=mysqli_query($con, "SELECT * FROM USER WHERE CNE='$CNE'");
-              
+                if(isset($_POST['A_etudiant'])){
+                   $CNE=$_POST['E_CNE']; 
+                   $Date_N=$_POST['D_etudiant']; 
+                   $get_name=mysqli_fetch_assoc(mysqli_query($con,"SELECT FULL_NAME from USER WHERE CNE='$CNE';"));
+                   $full_name=$get_name['FULL_NAME'];
+                   $result=mysqli_query($con, "SELECT * FROM USER WHERE CNE='$CNE'");
+                
                 
                 if(mysqli_num_rows($result) > 0) { 
-                  echo "<div class=' relative  flex flex-col items-center h-full'>
-                         <div class='text-3xl text-black text-center p-1 m-2 font-bold'>
-                         <p> login is successful!</p>
-                         </div> <br> 
-                         <div class=' absolute bottom-24 mt-4 mb-2 flex flex-col justify-between w-[80%] rounded-lg bg-orange-600'>
-                        <a class='p-2 text-center  font-bold text-black ' href='acc/acc_etudiant.php' >Login now</a>
-                        </div>";
-                        echo '<form method="post">
-                        <input type="hidden" name="full_name" value="' . $full_name . '">
-                        <button type="submit" id="submit" name="submit">Envoyer</button>
-                      </form>';  
-                       echo '<script>
-                        window.onload=function(){
-                          document.getElementById("submit").click();
-                        };
-                      </script>';
+                 session_start();
+                 $_SESSION['full_name'] = $full_name;
+                 $_SESSION['CNE'] = $CNE;
+
+                  echo "<div class='relative flex flex-col items-center h-full'>
+        <div class='text-3xl text-black text-center p-1 m-2 font-bold'>
+          <p> login is successful!</p>
+        </div> <br> 
+          <div class='absolute bottom-24 mt-4 mb-2 flex flex-col justify-between w-[80%] rounded-lg bg-orange-600'>
+            <a class='p-2 text-center font-bold text-black' href='acc/acc_etudiant.php'>Login now</a>
+            </div>
+            </div>";
+          
                 } else { 
               
                   echo "<div class=' relative  flex flex-col items-center h-full'>
@@ -55,7 +52,6 @@
                 } 
               }
              else{ 
-                
               
               ?> 
           <p class="text-center font-bold text-xl">Log <span>In</span></p>

@@ -9,6 +9,7 @@
 
 </head>
 <body class="p-0 m-0 bg-slate-300 font-serif">
+    
    <div class="container w-full h-lvh flex justify-center items-center">
     <div class="cards  p-6 m-6 w-[50%]   bg-slate-100 h-[80%] rounded-3xl shadow-2xl">
         <p class="text-center font-bold text-xl">Log <span>In</span></p>

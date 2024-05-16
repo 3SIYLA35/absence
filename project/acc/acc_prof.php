@@ -44,12 +44,16 @@
                 return $rand;
             }
         if(isset($_POST['code'])){
-            echo "123343";
+            session_start();
+            $btn_code=$_POST;
+            $_SESSION['code']=$btn_code;
             function inser_update(){ 
                 global $con;
             $code=let_code();
             $date_inser=time();
-            $cooldown=10;
+            echo $date_inser;
+            $_SESSION['date_inser']=$date_inser;
+            $cooldown=60*5;
             mysqli_query($con,"INSERT INTO CODE(CODE) VALUES('$code')");
             echo ' <div class=" absolute right-[47.5%] top-[30%] rounded-lg border-2 border-orange-600 mt-3 bg-white p-3 font-bold">'.$code.' </div> ';
             $db=time();
