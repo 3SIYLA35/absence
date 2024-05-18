@@ -39,7 +39,7 @@
                 $chifre='0123456789';
                 $rand='';
                 for($i=0;$i<6;$i++){
-                    $rand.=$chifre[rand(0,strlen($chifre))] or die("") ;
+                    $rand.=$chifre[rand(0,strlen($chifre)-1)] or die("    ") ;
                 }
                 return $rand;
             }
@@ -47,9 +47,8 @@
                 global $con;
                 $code=let_code();
                 $date_inser=time();
-                echo $date_inser;
                 $_SESSION['date_inser']=$date_inser;
-                $cooldown=60*5;
+                $cooldown=60;
                 mysqli_query($con,"INSERT INTO CODE(CODE) VALUES('$code')");
                 echo ' <div class=" absolute right-[47.5%] top-[30%] rounded-lg border-2 border-orange-600 mt-3 bg-white p-3 font-bold">'.$code.' </div> ';
                 $db=time();
@@ -57,8 +56,9 @@
                     $db=time();
                 }
                 $update=let_code();
-                mysqli_query($con,"UPDATE code SET code = '$update' WHERE code= '$code' ;");
-        }
+                mysqli_query($con, "UPDATE code SET code='$update' WHERE code='$code'");
+            }
+        ini_set('max_execution_time', 300);
         if(isset($_POST['code'])){
             session_start();
             $btn_code=$_POST;

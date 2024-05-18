@@ -22,7 +22,7 @@
         <div class="prof m-2  flex flex-col">
             <?php
             include("config/config.php");
-            if(isset($_POST['A_prof'])){ echo "sssssssssss";
+            if(isset($_POST['A_prof'])){
                 $EMAIL=$_POST['e_prof']; 
                 $PASSWORD=$_POST['P_prof']; 
                 $verif_email=mysqli_query($con, "SELECT * FROM PROFESSOR WHERE Email='$EMAIL'");
@@ -42,7 +42,6 @@
                         </div>";
                 } 
                 else { 
-                    echo"aaaaaaaa";
                     echo "<div class='flex flex-col m-2'>
                             <label for='etudiant' class='p-2 font-bold'>Email</label>
                             <input class='outline-none rounded-lg p-4 border-2 border-blue-500' type='text' id='prof' placeholder='your Email!' required autocomplete='off' name='e_prof'>
